@@ -37,6 +37,44 @@ This project implements a data-driven analysis system for identifying suitable s
 ![Performance Comparison](output/performance_comparison.png)
 *Direct comparison of key performance indicators*
 
+## Additional Visualizations
+
+### Distribution Plots
+- Goals: ![Distribution of Goals](output/dist_Gls.png)
+- Expected Goals (xG): ![Distribution of xG](output/dist_xG.png)
+- Goals per 90: ![Distribution of Goals per 90](output/dist_Goals_per_90.png)
+- Shots per 90: ![Distribution of Shots per 90](output/dist_Shots_per_90.png)
+- Shot Accuracy (SoT%): ![Distribution of SoT%](output/dist_SoT%.png)
+- Assists: ![Distribution of Assists](output/dist_Ast.png)
+- Minutes: ![Distribution of Minutes](output/dist_Min.png)
+- Suitability Score: ![Distribution of Suitability Score](output/dist_Suitability_Score.png)
+
+### Boxplots
+- Goals: ![Boxplot of Goals](output/box_Gls.png)
+- Expected Goals (xG): ![Boxplot of xG](output/box_xG.png)
+- Goals per 90: ![Boxplot of Goals per 90](output/box_Goals_per_90.png)
+- Shots per 90: ![Boxplot of Shots per 90](output/box_Shots_per_90.png)
+- Shot Accuracy (SoT%): ![Boxplot of SoT%](output/box_SoT%.png)
+- Assists: ![Boxplot of Assists](output/box_Ast.png)
+- Minutes: ![Boxplot of Minutes](output/box_Min.png)
+- Suitability Score: ![Boxplot of Suitability Score](output/box_Suitability_Score.png)
+
+### Top 10 Bar Charts
+- Goals: ![Top 10 by Goals](output/top10_Gls.png)
+- Expected Goals (xG): ![Top 10 by xG](output/top10_xG.png)
+- Goals per 90: ![Top 10 by Goals per 90](output/top10_Goals_per_90.png)
+- Shots per 90: ![Top 10 by Shots per 90](output/top10_Shots_per_90.png)
+- Shot Accuracy (SoT%): ![Top 10 by SoT%](output/top10_SoT%.png)
+- Assists: ![Top 10 by Assists](output/top10_Ast.png)
+- Minutes: ![Top 10 by Minutes](output/top10_Min.png)
+- Suitability Score: ![Top 10 by Suitability Score](output/top10_Suitability_Score.png)
+
+### Pairplot
+- ![Pairplot of Key Metrics](output/pairplot_metrics.png)
+
+### CSV Preview
+- ![CSV Preview (first 20 rows)](output/csv_preview.png)
+
 ## Key Findings
 
 ### Top Striker Candidates
