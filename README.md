@@ -126,3 +126,62 @@ MIT License
 
 ## Author
 Jaka Kus 
+
+## Who Should Arsenal Buy? (2024-2025)
+
+Based on the data-driven analysis, the following strikers are the most suitable and realistic targets for Arsenal:
+
+### Recommended Striker Targets
+1. **Mateo Retegui (Atalanta, Age 26)**
+   - Goals per 90: 1.02
+   - Shot Accuracy: 31.5%
+   - xG Performance: +6.5 (24 goals vs 17.50 xG)
+   - *Proven scorer in a top league, not at a "super club," and fits Arsenal's age/transfer profile.*
+2. **Alexander Isak (Newcastle Utd, Age 25)**
+   - Goals per 90: 0.80
+   - Shot Accuracy: 42.0%
+   - xG Performance: +3.1 (23 goals vs 19.90 xG)
+   - *Consistent, high-volume shooter, and a realistic target if Newcastle are open to selling.*
+3. **Georges Mikautadze (Lyon, Age 24)**
+   - Goals per 90: 0.70
+   - Shot Accuracy: 43.1%
+   - xG Performance: +0.8 (11 goals vs 10.20 xG)
+   - *Young, clinical, and likely available for transfer.*
+4. **Jonathan Burkardt (Mainz 05, Age 24)**
+   - Goals per 90: 0.75
+   - Shot Accuracy: 40.7%
+   - xG Performance: +2.8 (16 goals vs 13.20 xG)
+   - *Strong Bundesliga performer, fits Arsenal's age and value profile.*
+
+*See the [summary table](output/striker_summary_stats.csv) and [CSV preview](output/csv_preview.png) for more details on all candidates.*
+
+---
+
+## Unrealistic or Excluded Targets
+
+Some high-profile players score well in the analysis but are **excluded as realistic Arsenal targets** for the following reasons:
+
+- **Ousmane Dembélé (Paris S-G)**
+- **Kylian Mbappé (Real Madrid)**
+- **Omar Marmoush (Manchester City → Eint Frankfurt)**
+- **Erling Haaland (Manchester City)**
+
+**Why are they excluded?**
+- Play for "super clubs" (PSG, Real Madrid, Manchester City) who are highly unlikely to sell to Arsenal.
+- Transfer fees and wage demands would be prohibitively high.
+- Some are not natural strikers or do not fit Arsenal's tactical needs.
+- The analysis focuses on players who are both high-performing and realistically attainable.
+
+---
+
+## How Candidates Are Chosen
+- Players must be under 28, have played 15+ matches, and scored 10+ goals in top European leagues.
+- Excludes players from clubs with a very low likelihood of selling (e.g., PSG, Real Madrid, Man City, etc.).
+- Considers age, performance, and transfer potential for long-term value.
+
+---
+
+## Transparency
+- The full player data is available in [data/players_data-2024_2025.csv](data/players_data-2024_2025.csv).
+- A preview of the data and summary tables is available in the [output/](output/) directory.
+- All code and analysis steps are open source for review and reproducibility. 
