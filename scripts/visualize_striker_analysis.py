@@ -3,10 +3,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from arsenal_striker_analysis import combine_player_stats, calculate_striker_suitability
+import seaborn as sns
+import os
 
 # Set the style for all plots
 plt.style.use('default')
 sns.set_theme()
+
+# Ensure output directory exists
+os.makedirs('output', exist_ok=True)
 
 def create_radar_chart(player_data, title):
     """Create a radar chart for player performance metrics"""
@@ -114,6 +119,56 @@ def create_performance_comparison(df):
     plt.tight_layout()
     return plt.gcf()
 
+def create_distribution_plots(df, metrics, title_prefix):
+    for metric in metrics:
+        plt.figure(figsize=(10, 6))
+        sns.histplot(df[metric], kde=True, bins=30, color='skyblue')
+        plt.title(f'{title_prefix} Distribution: {metric}')
+        plt.xlabel(metric)
+        plt.ylabel('Frequency')
+        plt.tight_layout()
+        plt.savefig(f'output/dist_{metric}.png', dpi=200)
+        plt.close()
+
+def create_boxplots(df, metrics, title_prefix):
+    for metric in metrics:
+        plt.figure(figsize=(10, 6))
+        sns.boxplot(y=df[metric], color='lightgreen')
+        plt.title(f'{title_prefix} Boxplot: {metric}')
+        plt.ylabel(metric)
+        plt.tight_layout()
+        plt.savefig(f'output/box_{metric}.png', dpi=200)
+        plt.close()
+
+def create_pairplot(df, metrics):
+    sns.pairplot(df[metrics], diag_kind='kde')
+    plt.suptitle('Pairplot of Key Metrics', y=1.02)
+    plt.savefig('output/pairplot_metrics.png', dpi=200, bbox_inches='tight')
+    plt.close()
+
+def create_top10_barplots(df, metrics):
+    for metric in metrics:
+        top10 = df.nlargest(10, metric)
+        plt.figure(figsize=(12, 6))
+        sns.barplot(x='Player', y=metric, data=top10, palette='viridis')
+        plt.title(f'Top 10 Players by {metric}')
+        plt.xticks(rotation=45, ha='right')
+        plt.tight_layout()
+        plt.savefig(f'output/top10_{metric}.png', dpi=200)
+        plt.close()
+
+def save_csv_preview_image(csv_path, out_path, nrows=20):
+    df = pd.read_csv(csv_path, nrows=nrows)
+    fig, ax = plt.subplots(figsize=(min(20, 2+len(df.columns)//3), 1+nrows//2))
+    ax.axis('off')
+    tbl = ax.table(cellText=df.values, colLabels=df.columns, loc='center', cellLoc='center', fontsize=10)
+    tbl.auto_set_font_size(False)
+    tbl.set_fontsize(8)
+    tbl.scale(1, 1.2)
+    plt.tight_layout()
+    plt.savefig(out_path, dpi=200)
+    plt.close()
+
 def main():
     # Read and process data
     df = pd.read_csv('data/players_data-2024_2025.csv')
@@ -128,13 +183,22 @@ def main():
     ].copy()
     
     forwards['Suitability_Score'] = forwards.apply(calculate_striker_suitability, axis=1)
-    top_strikers = forwards.nlargest(5, 'Suitability_Score')
+    top_strikers = forwards.nlargest(10, 'Suitability_Score')
     
+    # Key metrics for more detailed analysis
+    metrics = ['Gls', 'xG', 'Goals_per_90', 'Shots_per_90', 'SoT%', 'Ast', 'Min', 'Suitability_Score']
+
+    # More visualizations
+    create_distribution_plots(forwards, metrics, 'Forwards')
+    create_boxplots(forwards, metrics, 'Forwards')
+    create_pairplot(forwards, metrics)
+    create_top10_barplots(forwards, metrics)
+
     # Create visualizations
-    radar_chart = create_radar_chart(top_strikers, 'Top 5 Strikers Performance Profile')
+    radar_chart = create_radar_chart(top_strikers.head(5), 'Top 5 Strikers Performance Profile')
     goals_xg_scatter = create_goals_vs_xg_scatter(forwards)
     shot_quality_heatmap = create_shot_quality_heatmap(forwards)
-    performance_comparison = create_performance_comparison(top_strikers)
+    performance_comparison = create_performance_comparison(top_strikers.head(5))
     
     # Save visualizations
     radar_chart.savefig('output/radar_chart.png', dpi=300, bbox_inches='tight')
@@ -142,34 +206,20 @@ def main():
     shot_quality_heatmap.savefig('output/shot_quality_heatmap.png', dpi=300, bbox_inches='tight')
     performance_comparison.savefig('output/performance_comparison.png', dpi=300, bbox_inches='tight')
     
-    # Generate statistical summary
-    summary_stats = forwards[['Player', 'Age', 'Gls', 'xG', 'Goals_per_90', 'Shots_per_90', 'SoT%', 'Suitability_Score']].round(2)
+    # Save summary and preview tables
+    summary_cols = ['Player', 'Age', 'Min', 'Gls', 'Ast', 'xG', 'Goals_per_90', 'Shots_per_90', 'SoT%', 'Suitability_Score']
+    summary_stats = forwards[summary_cols].round(2)
     summary_stats.to_csv('output/striker_summary_stats.csv', index=False)
-    
-    # Print analysis
-    print("\nStriker Analysis Summary:")
-    print("=" * 50)
-    print("\nTop 5 Strikers by Suitability Score:")
-    for _, player in top_strikers.iterrows():
-        print(f"\n{player['Player']} (Age: {player['Age']})")
-        print(f"Current Team: {player['Squad']}")
-        print(f"Goals: {player['Gls']} (xG: {player['xG']:.2f})")
-        print(f"Goals per 90: {player['Goals_per_90']:.2f}")
-        print(f"Shot Accuracy: {player['SoT%']:.1f}%")
-        print(f"Suitability Score: {player['Suitability_Score']:.2f}")
-    
-    print("\nKey Insights:")
-    print("1. Goals vs xG Analysis:")
-    print("   - Players above the diagonal line are outperforming their expected goals")
-    print("   - Players below the line are underperforming their expected goals")
-    
-    print("\n2. Shot Quality Metrics:")
-    print("   - Higher correlation between Goals per 90 and xG indicates consistent finishing")
-    print("   - Shot accuracy (SoT%) shows how clinical the strikers are")
-    
-    print("\n3. Performance Profile:")
-    print("   - Radar charts show balanced performance across key metrics")
-    print("   - Larger areas indicate more well-rounded strikers")
+    summary_stats.head(20).to_html('output/striker_summary_stats.html', index=False)
+    summary_stats.head(20).to_markdown('output/striker_summary_stats.md', index=False)
+
+    # Save CSV preview image for README/report
+    save_csv_preview_image('data/players_data-2024_2025.csv', 'output/csv_preview.png', nrows=20)
+
+    print("\nDetailed Striker Analysis Report Generated!")
+    print("- All visualizations and tables saved in the output/ directory.")
+    print("- Preview of player data CSV and summary tables included.")
+    print("- See README for updated visualizations and data transparency.")
 
 if __name__ == "__main__":
     main() 
