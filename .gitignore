@@ -34,8 +34,11 @@ ENV/
 *.swo
 
 # Project specific
-output/*.png
-output/*.csv
+# Allow output and docs for tracking
+# output/*.png
+# output/*.csv
+# docs/*.md
+# output/*.pdf
 data/*.csv
 
 # Logs
