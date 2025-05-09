@@ -75,7 +75,6 @@ To provide deeper insight, the following plots show the distribution, spread, an
 - Expected Goals (xG): ![Top 10 by xG](output/top10_xG.png)
 - Goals per 90: ![Top 10 by Goals per 90](output/top10_Goals_per_90.png)
 - Shots per 90: ![Top 10 by Shots per 90](output/top10_Shots_per_90.png)
-- Shot Accuracy (SoT%): ![Top 10 by SoT%](output/top10_SoT%.png)
 - Assists: ![Top 10 by Assists](output/top10_Ast.png)
 - Minutes: ![Top 10 by Minutes](output/top10_Min.png)
 - Suitability Score: ![Top 10 by Suitability Score](output/top10_Suitability_Score.png)
